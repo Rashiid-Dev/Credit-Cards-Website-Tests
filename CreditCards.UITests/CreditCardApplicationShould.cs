@@ -95,8 +95,6 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                output.WriteLine($"{DateTime.Now.ToLongTimeString()} Setting implicit wait");
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(35);
 
                 output.WriteLine($"{DateTime.Now.ToLongTimeString()} Navigating to '{HomeUrl}'");
                 driver.Navigate().GoToUrl(HomeUrl);
@@ -114,12 +112,33 @@ namespace CreditCards.UITests
                 //Thread.Sleep(1000);
 
 
-                output.WriteLine($"{DateTime.Now.ToLongTimeString()} Finding the element");
-                IWebElement applyNowLink = driver.FindElement(By.ClassName("customer-service-apply-now"));
+                output.WriteLine($"{DateTime.Now.ToLongTimeString()} Finding the element using explicit wait");
+
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(35));
+
+                Func<IWebDriver, IWebElement> findEnabledAndVisible = delegate (IWebDriver d)
+                {
+                    var e = d.FindElement(By.ClassName("customer-service-apply-now"));
+
+                    if (e is null)
+                    {
+                        throw new NotFoundException();
+                    }
+
+                    if (e.Enabled && e.Displayed)
+                    {
+                        return e;
+                    }
+
+                    throw new NotFoundException();
+                };
+
+                IWebElement applyNowLink = wait.Until(findEnabledAndVisible);
 
                 output.WriteLine($"{DateTime.Now.ToLongTimeString()} Found element displayed={applyNowLink.Displayed} Enabled={applyNowLink.Enabled}");
 
                 output.WriteLine($"{DateTime.Now.ToLongTimeString()} Clicking the element");
+
                 applyNowLink.Click();
 
                 Assert.Equal(driver.Url, ApplyUrl);
