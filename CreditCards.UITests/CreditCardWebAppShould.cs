@@ -12,8 +12,7 @@ namespace CreditCards.UITests
         public void LoadApplicationPage()
         {   using (IWebDriver driver = new ChromeDriver())
             {
-
-
+                driver.Navigate().GoToUrl("http://localhost:44108/");
             }
         }
     }
