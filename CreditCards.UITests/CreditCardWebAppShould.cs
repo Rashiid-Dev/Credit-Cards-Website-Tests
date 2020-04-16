@@ -17,10 +17,10 @@ namespace CreditCards.UITests
         {   using (IWebDriver driver = new ChromeDriver())
             {
                 
-
                 driver.Navigate().GoToUrl(HomeUrl);
 
                 Assert.Equal(HomeTitle, driver.Title);
+
                 Assert.Equal(HomeUrl, driver.Url);
             }
         }
@@ -37,6 +37,7 @@ namespace CreditCards.UITests
                 driver.Navigate().Refresh();
 
                 Assert.Equal(HomeTitle, driver.Title);
+
                 Assert.Equal(HomeUrl, driver.Url);
             }
         }
@@ -48,10 +49,18 @@ namespace CreditCards.UITests
             using (IWebDriver driver = new ChromeDriver())
             {
                 driver.Navigate().GoToUrl(HomeUrl);
+
+                IWebElement generationTokenElement = driver.FindElement(By.Id("GenerationToken"));
+
+                string initialToken = generationTokenElement.Text;
+
                 driver.Navigate().GoToUrl(AboutUrl);
+
                 driver.Navigate().Back();
 
-                //TODO assert that page was reloaded
+                string reloadedToken = driver.FindElement(By.Id("GenerationToken")).Text;
+
+                Assert.NotEqual(initialToken, reloadedToken);
             }
         }
 
@@ -61,15 +70,24 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                driver.Navigate().GoToUrl(AboutUrl);
+                driver.Navigate().GoToUrl(AboutUrl);           
+
                 driver.Navigate().GoToUrl(HomeUrl);
+
+                string initialToken = driver.FindElement(By.Id("GenerationToken")).Text;
+
                 driver.Navigate().Back();
+
                 driver.Navigate().Forward();
 
-                Assert.Equal(HomeTitle, driver.Title);
-                Assert.Equal(HomeUrl, driver.Url);
+                string reloadedToken = driver.FindElement(By.Id("GenerationToken")).Text;
 
-                //TODO assert that page was reloaded
+                Assert.NotEqual(initialToken, reloadedToken);
+
+                //Assert.Equal(HomeTitle, driver.Title);
+
+                //Assert.Equal(HomeUrl, driver.Url);
+
             }
         }
     }
