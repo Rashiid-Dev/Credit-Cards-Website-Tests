@@ -79,7 +79,24 @@ namespace CreditCards.UITests
 
             }
         }
-        
+
+        [Fact]
+        public void BeInitiatedFromHomePage_RandomGreeting()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                driver.Navigate().GoToUrl(HomeUrl);
+
+                IWebElement randomGreetingApplyLink = driver.FindElement(By.PartialLinkText("- Apply Now!"));
+
+                randomGreetingApplyLink.Click();
+
+                Assert.Equal(driver.Url, ApplyUrl);
+
+                Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
+
+            }
+        }
     }
 
     
