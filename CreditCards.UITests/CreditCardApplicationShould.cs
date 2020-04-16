@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Xunit;
+using Xunit.Abstractions;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
@@ -12,6 +13,13 @@ namespace CreditCards.UITests
     {
         private const string HomeUrl = "http://localhost:44108/";
         private const string ApplyUrl = "http://localhost:44108/Apply";
+
+        private readonly ITestOutputHelper output;
+
+        public CreditCardApplicationShould(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
 
         [Fact]
         public void BeInitiatedFromHomePage_NewLowRate()
@@ -87,22 +95,31 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new ChromeDriver())
             {
+                output.WriteLine($"{DateTime.Now.ToLongTimeString()} Setting implicit wait");
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(35);
+
+                output.WriteLine($"{DateTime.Now.ToLongTimeString()} Navigating to '{HomeUrl}'");
                 driver.Navigate().GoToUrl(HomeUrl);
 
-                IWebElement CarouselNext = driver.FindElement(By.CssSelector("[data-slide='next']"));
+                //IWebElement CarouselNext = driver.FindElement(By.CssSelector("[data-slide='next']"));
 
-                CarouselNext.Click();
+                //CarouselNext.Click();
 
-                Thread.Sleep(1000);
+                //Thread.Sleep(1000);
 
-                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(1));
+                //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(1));
 
-                CarouselNext.Click();
+                //CarouselNext.Click();
 
-                Thread.Sleep(1000);
+                //Thread.Sleep(1000);
 
+
+                output.WriteLine($"{DateTime.Now.ToLongTimeString()} Finding the element");
                 IWebElement applyNowLink = driver.FindElement(By.ClassName("customer-service-apply-now"));
 
+                output.WriteLine($"{DateTime.Now.ToLongTimeString()} Found element displayed={applyNowLink.Displayed} Enabled={applyNowLink.Enabled}");
+
+                output.WriteLine($"{DateTime.Now.ToLongTimeString()} Clicking the element");
                 applyNowLink.Click();
 
                 Assert.Equal(driver.Url, ApplyUrl);
