@@ -54,5 +54,23 @@ namespace CreditCards.UITests
                 //TODO assert that page was reloaded
             }
         }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void ReloadHomePageOnForward()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                driver.Navigate().GoToUrl(AboutUrl);
+                driver.Navigate().GoToUrl(HomeUrl);
+                driver.Navigate().Back();
+                driver.Navigate().Forward();
+
+                Assert.Equal(HomeTitle, driver.Title);
+                Assert.Equal(HomeUrl, driver.Url);
+
+                //TODO assert that page was reloaded
+            }
+        }
     }
 }
