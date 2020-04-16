@@ -51,6 +51,35 @@ namespace CreditCards.UITests
                 Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
             }
         }
+
+        [Fact]
+        public void BeInitiatedFromHomePage_CustomerService()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                driver.Navigate().GoToUrl(HomeUrl);
+
+                IWebElement CarouselNext = driver.FindElement(By.CssSelector("[data-slide='next']"));
+
+                CarouselNext.Click();
+
+                Thread.Sleep(1000);
+
+                CarouselNext.Click();
+
+                Thread.Sleep(1000);
+
+                IWebElement applyNowLink = driver.FindElement(By.ClassName("customer-service-apply-now"));
+
+                applyNowLink.Click();
+
+                Assert.Equal(driver.Url, ApplyUrl);
+
+                Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
+
+            }
+        }
+        
     }
 
     
