@@ -13,6 +13,10 @@ namespace CreditCards.UITests
         {   using (IWebDriver driver = new ChromeDriver())
             {
                 driver.Navigate().GoToUrl("http://localhost:44108/");
+
+                string pageTitle = driver.Title;
+
+                Assert.Equal("Home Page - Credit Cards", pageTitle);
             }
         }
     }
