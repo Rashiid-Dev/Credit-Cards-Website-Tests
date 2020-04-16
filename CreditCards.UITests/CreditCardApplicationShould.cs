@@ -3,6 +3,7 @@ using System.Threading;
 using Xunit;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 
 namespace CreditCards.UITests
 {
@@ -40,9 +41,12 @@ namespace CreditCards.UITests
 
                 CarouselNext.Click();
 
-                Thread.Sleep(1000); // allow carousel time to scroll
+                // will click the button if it shows up less than a second and timeout & throw an exception if it takes more than a second
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(1));
 
-                IWebElement easyApplyLink = driver.FindElement(By.LinkText("Easy: Apply Now!"));
+                //Thread.Sleep(1000); // allow carousel time to scroll
+
+                IWebElement easyApplyLink = wait.Until((d) => d.FindElement(By.LinkText("Easy: Apply Now!")));
 
                 easyApplyLink.Click();
 
@@ -64,6 +68,8 @@ namespace CreditCards.UITests
                 CarouselNext.Click();
 
                 Thread.Sleep(1000);
+
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(1));
 
                 CarouselNext.Click();
 
