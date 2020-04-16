@@ -57,6 +57,32 @@ namespace CreditCards.UITests
         }
 
         [Fact]
+        public void BeInitiatedFromHomePage_EasyApplication_Prebuilt_Conditions()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                driver.Navigate().GoToUrl(HomeUrl);
+
+                IWebElement CarouselNext = driver.FindElement(By.CssSelector("[data-slide='next']"));
+
+                CarouselNext.Click();
+
+                // will click the button if it shows up less than a second and timeout & throw an exception if it takes more than a second
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(1));
+
+                //Thread.Sleep(1000); // allow carousel time to scroll
+
+                IWebElement easyApplyLink = wait.Until(ExpectedConditions.ElementToBeClickable(By.LinkText("Easy: Apply Now!")));
+
+                easyApplyLink.Click();
+
+                Assert.Equal(driver.Url, ApplyUrl);
+
+                Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
+            }
+        }
+
+        [Fact]
         public void BeInitiatedFromHomePage_CustomerService()
         {
             using (IWebDriver driver = new ChromeDriver())
