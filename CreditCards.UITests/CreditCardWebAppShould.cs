@@ -17,6 +17,7 @@ namespace CreditCards.UITests
                 string pageTitle = driver.Title;
 
                 Assert.Equal("Home Page - Credit Cards", pageTitle);
+                Assert.Equal("http://localhost:44108/", driver.Url);
             }
         }
     }
