@@ -116,24 +116,7 @@ namespace CreditCards.UITests
 
                 WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(35));
 
-                Func<IWebDriver, IWebElement> findEnabledAndVisible = delegate (IWebDriver d)
-                {
-                    var e = d.FindElement(By.ClassName("customer-service-apply-now"));
-
-                    if (e is null)
-                    {
-                        throw new NotFoundException();
-                    }
-
-                    if (e.Enabled && e.Displayed)
-                    {
-                        return e;
-                    }
-
-                    throw new NotFoundException();
-                };
-
-                IWebElement applyNowLink = wait.Until(findEnabledAndVisible);
+                IWebElement applyNowLink = wait.Until(ExpectedConditions.ElementToBeClickable(By.ClassName("customer-service-apply-now")));
 
                 output.WriteLine($"{DateTime.Now.ToLongTimeString()} Found element displayed={applyNowLink.Displayed} Enabled={applyNowLink.Enabled}");
 
