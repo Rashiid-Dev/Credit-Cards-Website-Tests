@@ -101,6 +101,7 @@
     <Compile Include="CreditCardApplicationShould.cs" />
     <Compile Include="CreditCardJavascriptTests.cs" />
     <Compile Include="CreditCardWebAppShould.cs" />
+    <Compile Include="POM\ApplicationCompletePage.cs" />
     <Compile Include="POM\ApplicationPage.cs" />
     <Compile Include="POM\HomePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -5,6 +5,7 @@ using Xunit.Abstractions;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using CreditCards.UITests.POM;
 
 namespace CreditCards.UITests
 {
@@ -26,16 +27,14 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                driver.Navigate().GoToUrl(HomeUrl);
+                var homePage = new HomePage(driver);
 
-                IWebElement applyLink = driver.FindElement(By.Name("ApplyLowRate"));
+                homePage.NavigateTo();
 
-                applyLink.Click();
+                ApplicationPage applicationPage = homePage.ClickApplyNewLowRate();
 
-                Assert.Equal(driver.Url, ApplyUrl);
-
-                Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
-            }
+                applicationPage.EnsurePageLoaded();
+            } 
         }
 
         [Fact]
@@ -43,54 +42,15 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                driver.Navigate().GoToUrl(HomeUrl);
+                var homePage = new HomePage(driver);
 
-                IWebElement CarouselNext = driver.FindElement(By.CssSelector("[data-slide='next']"));
+                homePage.NavigateTo();
 
-                CarouselNext.Click();
+                homePage.WaitForEasyApplicationCarouselPage();
 
-                // will click the button if it shows up less than a second and timeout & throw an exception if it takes more than a second
-                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(1));
+                ApplicationPage applicationPage = homePage.ClickEasyApplicationLink();
 
-                //Thread.Sleep(1000); // allow carousel time to scroll
-
-                IWebElement easyApplyLink = wait.Until((d) => d.FindElement(By.LinkText("Easy: Apply Now!")));
-
-                easyApplyLink.Click();
-
-                Assert.Equal(driver.Url, ApplyUrl);
-
-                Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
-            }
-        }
-
-        [Fact]
-        public void BeInitiatedFromHomePage_EasyApplication_Prebuilt_Conditions()
-        {
-            using (IWebDriver driver = new ChromeDriver())
-            {
-                driver.Navigate().GoToUrl(HomeUrl);
-
-
-                //prevents accidental hovering over carousel so that it does move
-                driver.Manage().Window.Minimize();
-
-                IWebElement CarouselNext = driver.FindElement(By.CssSelector("[data-slide='next']"));
-
-                CarouselNext.Click();
-
-                // will click the button if it shows up less than a second and timeout & throw an exception if it takes more than a second
-                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(1));
-
-                //Thread.Sleep(1000); // allow carousel time to scroll
-
-                IWebElement easyApplyLink = wait.Until(ExpectedConditions.ElementToBeClickable(By.LinkText("Easy: Apply Now!")));
-
-                easyApplyLink.Click();
-
-                Assert.Equal(driver.Url, ApplyUrl);
-
-                Assert.Equal("Credit Card Application - Credit Cards", driver.Title);
+                applicationPage.EnsurePageLoaded();
             }
         }
 
@@ -194,45 +154,36 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                driver.Navigate().GoToUrl(ApplyUrl);
+                const string FirstName = "Rashiid";
+                const string LastName = "Jama";
+                const string Number = "123456-A";
+                const string Age = "23";
+                const string Income = "50000";
 
-                driver.FindElement(By.Id("FirstName")).SendKeys("Rashiid");
-                //IWebElement firstNameTextBox = driver.FindElement(By.Id("FirstName")).;
-                //firstNameTextBox.SendKeys("Rashiid");
-                driver.FindElement(By.Id("LastName")).SendKeys("Jama");
-                driver.FindElement(By.Id("FrequentFlyerNumber")).SendKeys("123456-A");
-                driver.FindElement(By.Id("Age")).SendKeys("23");
-                driver.FindElement(By.Id("GrossAnnualIncome")).SendKeys("50000");
-                driver.FindElement(By.Id("Single")).Click();
-                IWebElement howDidYouHearDropDown = driver.FindElement(By.Id("BusinessSource"));
-                SelectElement selection = new SelectElement(howDidYouHearDropDown);
+                var applicationPage = new ApplicationPage(driver);
 
-                //foreach(IWebElement option in selection.Options)
-                //{
-                //  if(option.GetAttribute("value") == "Internet")
-                //    {
-                //        option.Click();
-                //    }
-                //}
+                applicationPage.NavigateTo();
 
-                // Different ways of selecting the same option
-                selection.SelectByValue("Internet");
-                //selection.SelectByIndex(1);
-                //selection.SelectByText("Internet Search");
+                applicationPage.EnterFirstName(FirstName);
+                applicationPage.EnterLastName(LastName);
+                applicationPage.EnterFrequentFlyerNumber(Number);
+                applicationPage.EnterAge(Age);
+                applicationPage.EnterGrossAnnualIncome(Income);
+                applicationPage.ChooseMaritalStatusSingle();
+                applicationPage.ChooseBusinessSourceIntenet();
+                applicationPage.ClickAcceptTerms();
 
-                driver.FindElement(By.Id("TermsAccepted")).Click();
-                driver.FindElement(By.Id("SubmitApplication")).Click();
+                ApplicationCompletePage applicationCompletePage = applicationPage.SumbitApplication();
 
-                // Alternative way of submitting a form
-                //driver.FindElement(By.Id("FirstName")).Submit();
+                //applicationCompletePage.EnsurePageLoaded();
 
-                Assert.StartsWith("Application Complete", driver.Title);
-                Assert.Equal("ReferredToHuman", driver.FindElement(By.Id("Decision")).Text);
-                Assert.Equal("Rashiid Jama", driver.FindElement(By.Id("FullName")).Text);
-                Assert.Equal("23", driver.FindElement(By.Id("Age")).Text);
-                Assert.Equal("50000", driver.FindElement(By.Id("Income")).Text);
-                Assert.Equal("Single", driver.FindElement(By.Id("RelationshipStatus")).Text);
-                Assert.Equal("Internet", driver.FindElement(By.Id("BusinessSource")).Text);
+                Assert.Equal("ReferredToHuman", applicationCompletePage.Decision);
+                Assert.NotEmpty(applicationCompletePage.ReferenceNumber);
+                Assert.Equal($"{FirstName} {LastName}", applicationCompletePage.FullName);
+                Assert.Equal(Age, applicationCompletePage.Age);
+                Assert.Equal(Income, applicationCompletePage.Income);
+                Assert.Equal("Single", applicationCompletePage.RelationShipStatus);
+                Assert.Equal("Internet", applicationCompletePage.BusinessSource);
             }
         }
 

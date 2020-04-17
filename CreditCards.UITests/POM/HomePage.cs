@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -66,6 +67,15 @@ namespace CreditCards.UITests.POM
             }
         }
 
+        public void WaitForEasyApplicationCarouselPage()
+        {
+
+            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(11));
+
+            IWebElement easyApplyLink = wait.Until(ExpectedConditions.ElementToBeClickable(By.LinkText("Easy: Apply Now!")));
+
+        }
+
         public string GenerationToken => Driver.FindElement(By.Id("GenerationToken")).Text;
 
         public void ClickContactFooterLink() => Driver.FindElement(By.Id("ContactFooter")).Click();
@@ -76,7 +86,25 @@ namespace CreditCards.UITests.POM
 
         public bool IsCookieMeesagePresent() => Driver.FindElements(By.Id("CookiesBeingUsed")).Any();
 
+        public ApplicationPage ClickApplyNewLowRate() 
+        {
+            Driver.FindElement(By.Name("ApplyLowRate")).Click();
+            return new ApplicationPage(Driver);
+        }
+            
+
+        public ApplicationPage ClickEasyApplicationLink()
+        {
+            Driver.FindElement(By.LinkText("Easy: Apply Now!")).Click();
+            return new ApplicationPage(Driver);
+        }
+
     }
 
-   
+    //easy app navigate carousel
+    //IWebElement CarouselNext = driver.FindElement(By.CssSelector("[data-slide='next']"));
+    //CarouselNext.Click();
+
+
+
 }
