@@ -202,6 +202,7 @@ namespace CreditCards.UITests
                 driver.FindElement(By.Id("Single")).Click();
                 IWebElement howDidYouHearDropDown = driver.FindElement(By.Id("BusinessSource"));
                 SelectElement selection = new SelectElement(howDidYouHearDropDown);
+
                 //foreach(IWebElement option in selection.Options)
                 //{
                 //  if(option.GetAttribute("value") == "Internet")
@@ -209,10 +210,28 @@ namespace CreditCards.UITests
                 //        option.Click();
                 //    }
                 //}
+
+                // Different ways of selecting the same option
                 selection.SelectByValue("Internet");
+                //selection.SelectByIndex(1);
                 //selection.SelectByText("Internet Search");
 
-                
+                driver.FindElement(By.Id("TermsAccepted")).Click();
+                driver.FindElement(By.Id("SubmitApplication")).Click();
+
+                // Alternative way of submitting a form
+                //driver.FindElement(By.Id("FirstName")).Submit();
+
+                Assert.StartsWith("Application Complete", driver.Title);
+                Assert.Equal("ReferredToHuman", driver.FindElement(By.Id("Decision")).Text);
+                Assert.Equal("Rashiid Jama", driver.FindElement(By.Id("FullName")).Text);
+                Assert.Equal("23", driver.FindElement(By.Id("Age")).Text);
+                Assert.Equal("50000", driver.FindElement(By.Id("Income")).Text);
+                Assert.Equal("Single", driver.FindElement(By.Id("RelationshipStatus")).Text);
+                Assert.Equal("Internet", driver.FindElement(By.Id("BusinessSource")).Text);
+
+
+
 
 
 
