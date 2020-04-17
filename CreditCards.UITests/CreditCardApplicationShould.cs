@@ -196,63 +196,50 @@ namespace CreditCards.UITests
                 const string lastName = "Jama";
                 const string invalidAge = "17";
                 const string validAge = "23";
+                const string number = "123456-A";
+                const string income = "50000";
 
-                driver.Navigate().GoToUrl(ApplyUrl);
+                var applicationPage = new ApplicationPage(driver);
 
-                driver.FindElement(By.Id("FirstName")).SendKeys(firstName);
+                applicationPage.NavigateTo();
+
+                applicationPage.EnterFirstName(firstName);
 
                 // Not entering last name
 
-                driver.FindElement(By.Id("FrequentFlyerNumber")).SendKeys("123456-A");
+                applicationPage.EnterFrequentFlyerNumber(number);
 
-                driver.FindElement(By.Id("Age")).SendKeys(invalidAge);
+                applicationPage.EnterAge(invalidAge);
 
-                driver.FindElement(By.Id("GrossAnnualIncome")).SendKeys("50000");
+                applicationPage.EnterGrossAnnualIncome(income);
 
-                driver.FindElement(By.Id("Single")).Click();
+                applicationPage.ChooseMaritalStatusSingle();
 
-                IWebElement howDidYouHearDropDown = driver.FindElement(By.Id("BusinessSource"));
+                applicationPage.ChooseBusinessSourceIntenet();
 
-                SelectElement selection = new SelectElement(howDidYouHearDropDown);
+                applicationPage.ClickAcceptTerms();
 
-                selection.SelectByValue("Internet");
-               
-                driver.FindElement(By.Id("TermsAccepted")).Click();
-
-                driver.FindElement(By.Id("SubmitApplication")).Click();
+                applicationPage.SumbitApplication();
 
                 // Asserting that validation failed
-                var validationErrors = driver.FindElements(By.CssSelector(".validation-summary-errors > ul > li"));
 
-                Assert.Equal(2, validationErrors.Count);
+                Assert.Equal(2, applicationPage.ValidationErrorMessages.Count);
 
-                Assert.Equal("Please provide a last name", validationErrors[0].Text);
+                Assert.Contains("Please provide a last name", applicationPage.ValidationErrorMessages);
 
-                Assert.Equal("You must be at least 18 years old", validationErrors[1].Text);
+                Assert.Contains("You must be at least 18 years old", applicationPage.ValidationErrorMessages);
 
                 // Fix Errors
-                driver.FindElement(By.Id("LastName")).SendKeys(lastName);
+                applicationPage.EnterLastName(lastName);
 
-                driver.FindElement(By.Id("Age")).Clear();
+                applicationPage.ClearAge();
 
-                driver.FindElement(By.Id("Age")).SendKeys(validAge);
+                applicationPage.EnterAge(validAge);
 
                 // Resubmit form
-                driver.FindElement(By.Id("SubmitApplication")).Click();
+                ApplicationCompletePage applicationCompletePage =  applicationPage.SumbitApplication();
 
-                Assert.StartsWith("Application Complete", driver.Title);
-
-                Assert.Equal("ReferredToHuman", driver.FindElement(By.Id("Decision")).Text);
-
-                Assert.Equal("Rashiid Jama", driver.FindElement(By.Id("FullName")).Text);
-
-                Assert.Equal("23", driver.FindElement(By.Id("Age")).Text);
-
-                Assert.Equal("50000", driver.FindElement(By.Id("Income")).Text);
-
-                Assert.Equal("Single", driver.FindElement(By.Id("RelationshipStatus")).Text);
-
-                Assert.Equal("Internet", driver.FindElement(By.Id("BusinessSource")).Text);
+                //applicationCompletePage.EnsurePageLoaded();
 
             }
         }

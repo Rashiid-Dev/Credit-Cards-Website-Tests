@@ -1,7 +1,8 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
-
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace CreditCards.UITests.POM
 {
@@ -14,6 +15,19 @@ namespace CreditCards.UITests.POM
         public ApplicationPage(IWebDriver driver)
         {
             Driver = driver;
+        }
+
+        public ReadOnlyCollection<string> ValidationErrorMessages
+        {
+            get
+            {
+                return Driver.FindElements(
+                    By.CssSelector(".validation-summary-errors > ul > li"))
+                    .Select(x => x.Text)
+                    .ToList()
+                    .AsReadOnly();
+                            
+            }
         }
 
         public void NavigateTo()
@@ -43,6 +57,7 @@ namespace CreditCards.UITests.POM
             }
         }
 
+        public void ClearAge() => Driver.FindElement(By.Id("Age")).Clear();
         public void EnterFirstName(string firstName) => Driver.FindElement(By.Id("FirstName")).SendKeys(firstName);
         public void EnterLastName(string lastname) => Driver.FindElement(By.Id("LastName")).SendKeys(lastname);
         public void EnterFrequentFlyerNumber(string number) => Driver.FindElement(By.Id("FrequentFlyerNumber")).SendKeys(number);
