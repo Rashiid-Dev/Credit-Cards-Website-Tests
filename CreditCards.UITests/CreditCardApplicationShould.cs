@@ -184,6 +184,27 @@ namespace CreditCards.UITests
 
             }
         }
+
+        [Fact]
+        public void BeSubmittedWhenValid()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                driver.Navigate().GoToUrl(ApplyUrl);
+
+                driver.FindElement(By.Id("FirstName")).SendKeys("Rashiid");
+                //IWebElement firstNameTextBox = driver.FindElement(By.Id("FirstName")).;
+                //firstNameTextBox.SendKeys("Rashiid");
+                driver.FindElement(By.Id("LastName")).SendKeys("Jama");
+                driver.FindElement(By.Id("FrequentFlyerNumber")).SendKeys("123456-A");
+                driver.FindElement(By.Id("Age")).SendKeys("23");
+                driver.FindElement(By.Id("GrossAnnualIncome")).SendKeys("50000");
+
+
+
+
+            }
+        }
     }
 
     
