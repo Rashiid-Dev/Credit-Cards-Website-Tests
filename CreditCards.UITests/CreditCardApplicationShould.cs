@@ -324,5 +324,24 @@ namespace CreditCards.UITests
             }
         }
 
+        [Fact]
+        public void AlertIfLiveChatClosed()
+        {
+            using(IWebDriver driver = new ChromeDriver())
+            {
+                driver.Navigate().GoToUrl(HomeUrl);
+
+                driver.FindElement(By.Id("LiveChat")).Click();
+
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+
+                IAlert alert = wait.Until(ExpectedConditions.AlertIsPresent());
+
+                Assert.Equal("Live chat is currently closed.", alert.Text);
+
+                alert.Accept();
+            }
+        }
+
     }
 }
