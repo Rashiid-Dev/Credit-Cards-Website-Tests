@@ -71,6 +71,10 @@ namespace CreditCards.UITests
             {
                 driver.Navigate().GoToUrl(HomeUrl);
 
+
+                //prevents accidental hovering over carousel so that it does move
+                driver.Manage().Window.Minimize();
+
                 IWebElement CarouselNext = driver.FindElement(By.CssSelector("[data-slide='next']"));
 
                 CarouselNext.Click();
