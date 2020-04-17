@@ -24,7 +24,7 @@ namespace CreditCards.UITests
         [Fact]
         public void BeInitiatedFromHomePage_NewLowRate()
         {
-            using(IWebDriver driver = new ChromeDriver())
+            using (IWebDriver driver = new ChromeDriver())
             {
                 driver.Navigate().GoToUrl(HomeUrl);
 
@@ -229,16 +229,78 @@ namespace CreditCards.UITests
                 Assert.Equal("50000", driver.FindElement(By.Id("Income")).Text);
                 Assert.Equal("Single", driver.FindElement(By.Id("RelationshipStatus")).Text);
                 Assert.Equal("Internet", driver.FindElement(By.Id("BusinessSource")).Text);
+            }
+        }
 
+        [Fact]
+        public void BeSubmittedWhenValidationErrorsCorrected()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                const string firstName = "Rashiid";
+                const string lastName = "Jama";
+                const string invalidAge = "17";
+                const string validAge = "23";
 
+                driver.Navigate().GoToUrl(ApplyUrl);
 
+                driver.FindElement(By.Id("FirstName")).SendKeys(firstName);
 
+                // Not entering last name
 
+                driver.FindElement(By.Id("FrequentFlyerNumber")).SendKeys("123456-A");
 
+                driver.FindElement(By.Id("Age")).SendKeys(invalidAge);
+
+                driver.FindElement(By.Id("GrossAnnualIncome")).SendKeys("50000");
+
+                driver.FindElement(By.Id("Single")).Click();
+
+                IWebElement howDidYouHearDropDown = driver.FindElement(By.Id("BusinessSource"));
+
+                SelectElement selection = new SelectElement(howDidYouHearDropDown);
+
+                selection.SelectByValue("Internet");
+               
+                driver.FindElement(By.Id("TermsAccepted")).Click();
+
+                driver.FindElement(By.Id("SubmitApplication")).Click();
+
+                // Asserting that validation failed
+                var validationErrors = driver.FindElements(By.CssSelector(".validation-summary-errors > ul > li"));
+
+                Assert.Equal(2, validationErrors.Count);
+
+                Assert.Equal("Please provide a last name", validationErrors[0].Text);
+
+                Assert.Equal("You must be at least 18 years old", validationErrors[1].Text);
+
+                // Fix Errors
+                driver.FindElement(By.Id("LastName")).SendKeys(lastName);
+
+                driver.FindElement(By.Id("Age")).Clear();
+
+                driver.FindElement(By.Id("Age")).SendKeys(validAge);
+
+                // Resubmit form
+                driver.FindElement(By.Id("SubmitApplication")).Click();
+
+                Assert.StartsWith("Application Complete", driver.Title);
+
+                Assert.Equal("ReferredToHuman", driver.FindElement(By.Id("Decision")).Text);
+
+                Assert.Equal("Rashiid Jama", driver.FindElement(By.Id("FullName")).Text);
+
+                Assert.Equal("23", driver.FindElement(By.Id("Age")).Text);
+
+                Assert.Equal("50000", driver.FindElement(By.Id("Income")).Text);
+
+                Assert.Equal("Single", driver.FindElement(By.Id("RelationshipStatus")).Text);
+
+                Assert.Equal("Internet", driver.FindElement(By.Id("BusinessSource")).Text);
 
             }
         }
-    }
 
-    
+    }
 }
