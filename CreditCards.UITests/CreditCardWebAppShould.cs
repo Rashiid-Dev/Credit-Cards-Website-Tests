@@ -14,11 +14,18 @@ namespace CreditCards.UITests
 
         [Fact]
         [Trait("Category", "Smoke")]
-        public void LoadApplicationPage()
+        public void LoadHomePage()
         {   using (IWebDriver driver = new ChromeDriver())
             {
                 
                 driver.Navigate().GoToUrl(HomeUrl);
+
+                driver.Manage().Window.Maximize();
+
+                // Window manipulations
+                //driver.Manage().Window.Size(300, 400);
+                //driver.Manage().Window.Position = new System.Drawing.Size(1,1);
+                //driver.Manage().Window.FullScreen();
 
                 Assert.Equal(HomeTitle, driver.Title);
 
