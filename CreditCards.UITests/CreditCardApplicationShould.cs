@@ -305,65 +305,6 @@ namespace CreditCards.UITests
 
             }
         }
-        [Fact]
-        public void OpenContactFooterLinkNewTab()
-        {
-            using(IWebDriver driver = new ChromeDriver())
-            {
-                driver.Navigate().GoToUrl(HomeUrl);
-
-                driver.FindElement(By.Id("ContactFooter")).Click();
-
-                var allTabs = driver.WindowHandles;
-                string homePageTab = allTabs[0];
-                string contactTab = allTabs[1];
-
-                driver.SwitchTo().Window(contactTab);
-                
-                Assert.EndsWith("/Home/Contact", driver.Url);
-            }
-        }
-
-        [Fact]
-        public void AlertIfLiveChatClosed()
-        {
-            using(IWebDriver driver = new ChromeDriver())
-            {
-                driver.Navigate().GoToUrl(HomeUrl);
-
-                driver.FindElement(By.Id("LiveChat")).Click();
-
-                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-
-                IAlert alert = wait.Until(ExpectedConditions.AlertIsPresent());
-
-                Assert.Equal("Live chat is currently closed.", alert.Text);
-
-                //Clicks Ok
-                alert.Accept();
-            }
-        }
-
-        [Fact]
-        public void NotNavigateToAboutUsWhenCancelIsClicked()
-        {
-            using (IWebDriver driver = new ChromeDriver())
-            {
-                driver.Navigate().GoToUrl(HomeUrl);
-
-                driver.FindElement(By.Id("LearnAboutUs")).Click();
-
-                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-
-                IAlert alertBox = wait.Until(ExpectedConditions.AlertIsPresent());
-
-                //Clicks Cancel
-                alertBox.Dismiss();
-
-                Assert.Equal(HomeTitle, driver.Title);
-
-            }
-        }
 
     }
 }
