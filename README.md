@@ -35,5 +35,8 @@ CreditCards.UITests Solution (Tests)
 - CreditCardApplicationShould.cs (Test navigation to the Application page and completion/submission of form)
 - CreditJavaScriptTests.cs (Contains 1 test to access a link layered over by JS)
 - CreditCardWebAppShould.cs (Tests Various aspects of the Homepage(Links/Buttons/Tables etc.))
-
+- 
+## Refactoring
+Most of the project has been refactored.
+What is left in CreditCardWebAppShould.cs and CreditCardJavaScriptTests.cs will be refactored in a coming update.
 
