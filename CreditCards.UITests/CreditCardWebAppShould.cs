@@ -3,6 +3,10 @@ using Xunit;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System.Collections.ObjectModel;
+using ApprovalTests.Reporters;
+using ApprovalTests.Reporters.Windows;
+using System.IO;
+using ApprovalTests;
 
 namespace CreditCards.UITests
 {
@@ -160,6 +164,7 @@ namespace CreditCards.UITests
         }
 
         [Fact]
+        [UseReporter(typeof(BeyondCompareReporter))]
         public void RenderAboutPage()
         {
             using (IWebDriver driver = new ChromeDriver())
@@ -172,6 +177,9 @@ namespace CreditCards.UITests
 
                 screenshot.SaveAsFile("aboutpage.png", ScreenshotImageFormat.Png);
 
+                FileInfo file = new FileInfo("aboutpage.png");
+
+                Approvals.Verify(file);
             }
         }
 
