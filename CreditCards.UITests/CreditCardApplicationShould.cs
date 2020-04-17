@@ -199,6 +199,20 @@ namespace CreditCards.UITests
                 driver.FindElement(By.Id("FrequentFlyerNumber")).SendKeys("123456-A");
                 driver.FindElement(By.Id("Age")).SendKeys("23");
                 driver.FindElement(By.Id("GrossAnnualIncome")).SendKeys("50000");
+                driver.FindElement(By.Id("Single")).Click();
+                IWebElement howDidYouHearDropDown = driver.FindElement(By.Id("BusinessSource"));
+                SelectElement selection = new SelectElement(howDidYouHearDropDown);
+                //foreach(IWebElement option in selection.Options)
+                //{
+                //  if(option.GetAttribute("value") == "Internet")
+                //    {
+                //        option.Click();
+                //    }
+                //}
+                selection.SelectByValue("Internet");
+                //selection.SelectByText("Internet Search");
+
+                
 
 
 
