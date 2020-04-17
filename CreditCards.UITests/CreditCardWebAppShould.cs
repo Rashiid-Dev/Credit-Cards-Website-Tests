@@ -12,6 +12,7 @@ namespace CreditCards.UITests
         private const string HomeTitle = "Home Page - Credit Cards";
         private const string AboutUrl = "http://localhost:44108/Home/About";
 
+
         [Fact]
         [Trait("Category", "Smoke")]
         public void LoadHomePage()
@@ -118,6 +119,33 @@ namespace CreditCards.UITests
                 Assert.Equal("Gold Credit Card", tableCells[4].Text);
                 Assert.Equal("17% APR", tableCells[5].Text);
                
+            }
+        }
+
+        [Fact]
+        public void NotDisplayCookieUseMessage()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                driver.Navigate().GoToUrl(HomeUrl);
+
+                driver.Manage().Cookies.AddCookie(new Cookie("acceptedCookies", "true"));
+
+                driver.Navigate().Refresh();
+
+                //returns empty rather than throw an exeption if there is none
+                ReadOnlyCollection<IWebElement> message = driver.FindElements(By.Id("CookiesBeingUsed"));
+
+                Assert.Empty(message);
+
+                // Gets cookie
+                //Cookie cookieValue = driver.Manage().Cookies.GetCookieNamed("acceptedCookies");
+                //Assert.Equal("true", cookieValue.Value);
+
+                // Deletes cookie
+                //driver.Manage().Cookies.DeleteCookieNamed("acceptedCookies");
+
+
             }
         }
     }
