@@ -13,7 +13,7 @@ namespace CreditCards.UITests
     {
         private const string HomeUrl = "http://localhost:44108/";
         private const string ApplyUrl = "http://localhost:44108/Apply";
-
+        private const string HomeTitle = "Home Page - Credit Cards";
         private readonly ITestOutputHelper output;
 
         public CreditCardApplicationShould(ITestOutputHelper output)
@@ -339,7 +339,29 @@ namespace CreditCards.UITests
 
                 Assert.Equal("Live chat is currently closed.", alert.Text);
 
+                //Clicks Ok
                 alert.Accept();
+            }
+        }
+
+        [Fact]
+        public void NotNavigateToAboutUsWhenCancelIsClicked()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                driver.Navigate().GoToUrl(HomeUrl);
+
+                driver.FindElement(By.Id("LearnAboutUs")).Click();
+
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+
+                IAlert alertBox = wait.Until(ExpectedConditions.AlertIsPresent());
+
+                //Clicks Cancel
+                alertBox.Dismiss();
+
+                Assert.Equal(HomeTitle, driver.Title);
+
             }
         }
 
