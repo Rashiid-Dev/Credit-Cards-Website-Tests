@@ -12,6 +12,16 @@ namespace CreditCards.UITests
         private const string HomeTitle = "Home Page - Credit Cards";
         private const string AboutUrl = "http://localhost:44108/Home/About";
 
+        [Fact]
+        public void BaseTest()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                driver.Navigate().GoToUrl(HomeUrl);
+
+            }
+        }
+
 
         [Fact]
         [Trait("Category", "Smoke")]
@@ -148,5 +158,23 @@ namespace CreditCards.UITests
 
             }
         }
+
+        [Fact]
+        public void RenderAboutPage()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                driver.Navigate().GoToUrl(AboutUrl);
+
+                ITakesScreenshot screenshotDriver = (ITakesScreenshot)driver;
+
+                Screenshot screenshot = screenshotDriver.GetScreenshot();
+
+                screenshot.SaveAsFile("aboutpage.png", ScreenshotImageFormat.Png);
+
+            }
+        }
+
+
     }
 }
