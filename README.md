@@ -6,7 +6,7 @@
 This is a Selenium test project that Tests a local Credit Card website
 
 ## Project Goal
-Learn more about Selinium
+Setup a Selenium test project that tests the pages/links/buttons/forms etc.
 
 ## To Run
 - Download & Install [Visual Studio](https://visualstudio.microsoft.com/downloads/)
@@ -26,16 +26,16 @@ Learn more about Selinium
 - - ApprovalUtilities
 
 ## Project
-CreditCards Solution (Pre-made website to test)
-CreditCards.UITests Solution (Tests)
-- POM (Page Object Model) Folder
-- - ApplicationCompletePage.cs (POM for the complete application page)
-- - ApplicationPage.cs (POM for the application page)
-- - HomePage.cs (POM for the homepage)
-- CreditCardApplicationShould.cs (Test navigation to the Application page and completion/submission of form)
-- CreditJavaScriptTests.cs (Contains 1 test to access a link layered over by JS)
-- CreditCardWebAppShould.cs (Tests Various aspects of the Homepage(Links/Buttons/Tables etc.))
-- 
+- CreditCards Project (Pre-made website to test)
+- CreditCards.UITests Project (Tests)
+- - POM (Page Object Model) Folder
+- - - ApplicationCompletePage.cs (POM for the complete application page)
+- - - ApplicationPage.cs (POM for the application page)
+- - - HomePage.cs (POM for the homepage)
+- - CreditCardApplicationShould.cs (Test navigation to the Application page and completion/submission of form)
+- - CreditJavaScriptTests.cs (Contains 1 test to access a link layered over by JS)
+- - CreditCardWebAppShould.cs (Tests Various aspects of the Homepage(Links/Buttons/Tables etc.))
+
 ## Refactoring
 Most of the project has been refactored.
 What is left in CreditCardWebAppShould.cs and CreditCardJavaScriptTests.cs will be refactored in a coming update.
