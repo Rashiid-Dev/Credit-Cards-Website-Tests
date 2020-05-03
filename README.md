@@ -36,6 +36,10 @@ Setup a Selenium test project that tests the pages/links/buttons/forms etc.
 - - CreditJavaScriptTests.cs (Contains 1 test to access a link layered over by JS)
 - - CreditCardWebAppShould.cs (Tests Various aspects of the Homepage(Links/Buttons/Tables etc.))
 
+##Jira Board
+![The Board](https://i.imgur.com/sWO6AQS.jpg)
+[Link to board](https://spartaacademyhub.atlassian.net/jira/software/projects/CCWT/boards/2)
+
 ## Refactoring
 Most of the project has been refactored.
 What is left in CreditCardWebAppShould.cs and CreditCardJavaScriptTests.cs will be refactored in a coming update.
