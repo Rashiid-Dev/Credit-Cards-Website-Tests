@@ -1,16 +1,8 @@
 ﻿using System;
 using TechTalk.SpecFlow;
-using CreditCards.UITests;
-using Xunit;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using System.Collections.ObjectModel;
-using ApprovalTests.Reporters;
-using ApprovalTests.Reporters.Windows;
-using System.IO;
-using ApprovalTests;
 using CreditCards.UITests.POM;
-using OpenQA.Selenium.Support.UI;
 
 
 namespace CreditCards.UITests.BDD.Tests
