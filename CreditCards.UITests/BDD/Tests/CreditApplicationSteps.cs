@@ -103,7 +103,16 @@ namespace CreditCards.UITests
         [Then(@"I should be taken to the complete application form")]
         public void ThenIShouldBeTakenToTheCompleteApplicationForm()
         {
-            Assert.Equal(driver.Url, ApplyUrl); 
+            //Assert.Equal(driver.Url, ApplyUrl); 
+            var applicationPage = new ApplicationPage(driver);
+            ApplicationCompletePage applicationCompletePage = new ApplicationCompletePage(driver);
+            Assert.Equal("ReferredToHuman", applicationCompletePage.Decision);
+            Assert.NotEmpty(applicationCompletePage.ReferenceNumber);
+            Assert.Equal($"{FirstName} {LastName}", applicationCompletePage.FullName);
+            Assert.Equal(Age, applicationCompletePage.Age);
+            Assert.Equal(Income, applicationCompletePage.Income);
+            Assert.Equal("Single", applicationCompletePage.RelationShipStatus);
+            Assert.Equal("Internet", applicationCompletePage.BusinessSource);
         }
 
 

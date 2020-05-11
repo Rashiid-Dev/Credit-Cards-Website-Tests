@@ -181,7 +181,8 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="BDD\Gherkin\SeeHomepage.feature" />
-    <None Include="BDD\Gherkin\SpecFlowFeature1.feature" />
+    <None Include="BDD\Gherkin\CreditApplicationFeature.feature" />
+    <None Include="BDD\Gherkin\SpecFlowFeature2.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

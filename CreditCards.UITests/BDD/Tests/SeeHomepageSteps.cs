@@ -28,12 +28,12 @@ namespace CreditCards.UITests.BDD.Tests
             homePage.EnsurePageLoaded();            
         }
 
-        [AfterScenario]
-        public void DisposeWebDriver()
-        {
-            driver.Dispose();
-        }
+        //[AfterScenario]
+        //public void DisposeWebDriver()
+        //{
+        //    driver.Dispose();
+        //}
 
-        
+
     }
 }
