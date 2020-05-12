@@ -36,39 +36,39 @@ namespace CreditCards.UITests
             applicationPage.NavigateTo();
         }
         
-        [Given(@"I enter my first name")]
-        public void GivenIEnterMyFirstName()
+        [Given(@"I enter a first name of (.*)")]
+        public void GivenIEnterMyFirstName(string firstName)
         {
             var applicationPage = new ApplicationPage(driver);
-            applicationPage.EnterFirstName(FirstName);
+            applicationPage.EnterFirstName(firstName);
         }
         
-        [Given(@"I enter my last name")]
-        public void GivenIEnterMyLastName()
+        [Given(@"I enter a last name of (.*)")]
+        public void GivenIEnterMyLastName(string lastName)
         {
             var applicationPage = new ApplicationPage(driver);
-            applicationPage.EnterLastName(LastName);
+            applicationPage.EnterLastName(lastName);
         }
         
-        [Given(@"I enter my frequent flyer number")]
-        public void GivenIEnterMyFrequentFlyerNumber()
+        [Given(@"I enter a frequent flyer number of (.*)")]
+        public void GivenIEnterMyFrequentFlyerNumber(string number)
         {
             var applicationPage = new ApplicationPage(driver);
-            applicationPage.EnterFrequentFlyerNumber(Number);
+            applicationPage.EnterFrequentFlyerNumber(number);
         }
         
-        [Given(@"I enter my age")]
-        public void GivenIEnterMyAge()
+        [Given(@"I enter an age of (.*)")]
+        public void GivenIEnterMyAge(string age)
         {
             var applicationPage = new ApplicationPage(driver);
-            applicationPage.EnterAge(Age);
+            applicationPage.EnterAge(age);
         }
         
-        [Given(@"I enter my gross annual income")]
-        public void GivenIEnterMyGrossAnnualIncome()
+        [Given(@"I enter a gross annual income of (.*)")]
+        public void GivenIEnterMyGrossAnnualIncome(string income)
         {
             var applicationPage = new ApplicationPage(driver);
-            applicationPage.EnterGrossAnnualIncome(Income);
+            applicationPage.EnterGrossAnnualIncome(income);
         }
         
         [Given(@"I enter my marital status as single")]
