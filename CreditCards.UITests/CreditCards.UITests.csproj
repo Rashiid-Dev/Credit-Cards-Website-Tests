@@ -168,7 +168,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BDD\Tests\SeeHomepageSteps.cs" />
     <Compile Include="BDD\Tests\CreditApplicationSteps.cs" />
     <Compile Include="CreditCardApplicationShould.cs" />
     <Compile Include="CreditCardJavascriptTests.cs" />
@@ -180,7 +179,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="BDD\Gherkin\SeeHomepage.feature" />
     <None Include="BDD\Gherkin\CreditApplicationFeature.feature" />
     <None Include="packages.config" />
   </ItemGroup>

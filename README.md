@@ -41,7 +41,7 @@ Setup a Selenium test project that tests the pages/links/buttons/forms etc.
 [Link to board](https://spartaacademyhub.atlassian.net/jira/software/projects/CCWT/boards/2)
 
 ## Test Demo Video
-[Video](https://drive.google.com/open?id=1G8UDbznXnQIiErA5JhbfN0LPIghrx8UP)
+[Video](https://drive.google.com/open?id=1O2r6mWrEE7SdgqAEz6B8fw3bcIyKYd0L)
 
 ## Refactoring
 Most of the project has been refactored.
