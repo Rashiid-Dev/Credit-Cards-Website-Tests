@@ -103,7 +103,7 @@ namespace CreditCards.UITests
         [Then(@"I should be taken to the complete application form")]
         public void ThenIShouldBeTakenToTheCompleteApplicationForm()
         {
-            //Assert.Equal(driver.Url, ApplyUrl); 
+            
             var applicationPage = new ApplicationPage(driver);
             ApplicationCompletePage applicationCompletePage = new ApplicationCompletePage(driver);
             Assert.Equal("ReferredToHuman", applicationCompletePage.Decision);
@@ -113,6 +113,45 @@ namespace CreditCards.UITests
             Assert.Equal(Income, applicationCompletePage.Income);
             Assert.Equal("Single", applicationCompletePage.RelationShipStatus);
             Assert.Equal("Internet", applicationCompletePage.BusinessSource);
+        }
+
+        [Given(@"I don't enter a last name")]
+        public void GivenIDonTEnterALastName()
+        {
+            var applicationPage = new ApplicationPage(driver);
+            applicationPage.EnterLastName("");
+        }
+
+        [Then(@"I should see two errors")]
+        public void ThenIShouldSeeTwoErrors()
+        {
+            var applicationPage = new ApplicationPage(driver);
+            Assert.Equal(2, applicationPage.ValidationErrorMessages.Count);
+
+            Assert.Contains("Please provide a last name", applicationPage.ValidationErrorMessages);
+
+            Assert.Contains("You must be at least 18 years old", applicationPage.ValidationErrorMessages);
+        }
+
+        [Then(@"I enter a last name of (.*)")]
+        public void ThenIEnterALastNameOfJama(string lastName)
+        {
+            var applicationPage = new ApplicationPage(driver);
+            applicationPage.EnterLastName(lastName);
+        }
+
+        [Then(@"I remove the entered age")]
+        public void ThenIRemoveTheEnteredAge()
+        {
+            var applicationPage = new ApplicationPage(driver);
+            applicationPage.ClearAge();
+        }
+
+        [Then(@"I enter an age of (.*)")]
+        public void ThenIEnterAnAgeOf(string validAge)
+        {
+            var applicationPage = new ApplicationPage(driver);
+            applicationPage.EnterAge(validAge);
         }
 
 
