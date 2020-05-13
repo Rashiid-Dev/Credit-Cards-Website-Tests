@@ -28,6 +28,11 @@ Setup a Selenium test project that tests the pages/links/buttons/forms etc.
 ## Project
 - CreditCards Project (Pre-made website to test)
 - CreditCards.UITests Project (Tests)
+- - BDD (Behavioural Driven Development)
+- - - Gherkin
+- - - - CreditApplicationFeature.Feature (Feature file for the application form tests)
+- - - Tests
+- - - - CreditApplicationSteps.cs (Steps for the application form tests)
 - - POM (Page Object Model) Folder
 - - - ApplicationCompletePage.cs (POM for the complete application page)
 - - - ApplicationPage.cs (POM for the application page)
@@ -36,6 +41,9 @@ Setup a Selenium test project that tests the pages/links/buttons/forms etc.
 - - CreditJavaScriptTests.cs (Contains 1 test to access a link layered over by JS)
 - - CreditCardWebAppShould.cs (Tests Various aspects of the Homepage(Links/Buttons/Tables etc.))
 
+## Project Brief
+![Brief](https://i.imgur.com/yuapfFy.png)
+
 ## Jira Board
 ![The Board](https://i.imgur.com/sWO6AQS.jpg)
 [Link to board](https://spartaacademyhub.atlassian.net/jira/software/projects/CCWT/boards/2)
@@ -43,7 +51,8 @@ Setup a Selenium test project that tests the pages/links/buttons/forms etc.
 ## Test Demo Video
 [Video](https://drive.google.com/open?id=1O2r6mWrEE7SdgqAEz6B8fw3bcIyKYd0L)
 
+
 ## Refactoring
 Most of the project has been refactored.
-What is left in CreditCardWebAppShould.cs and CreditCardJavaScriptTests.cs will be refactored in a coming update.
+What is left in CreditCardWebAppShould.cs will be refactored in a coming update.
 
